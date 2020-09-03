@@ -1,14 +1,18 @@
 {
   "name": "apitests",
   "version": "1.0.0",
-  "description": "Node.Js Api Tests",
+  "description": "Projeto Open Source Para Tests do API Do MPesa",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon .",
+    "start": "node ."
   },
   "author": "Guimarães Mahota",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
+    "@paymentsds/mpesa": "0.1.0-alpha-7",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1"
   }
 }
