@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "googleapis": "^59.0.0",
     "ibm-watson": "^5.7.0",
+    "image-downloader": "^4.0.1",
     "sbd": "^1.0.18",
     "tough-cookie": "^4.0.0",
     "tunnel": "0.0.6"
