@@ -77,3 +77,16 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# credentials
+credentials/*.json
+
+content.json
+
+content/*.png
+content/*.jpg
+content/*.js
+content/*.mov
+Adobe After Effects Auto-Save
+template.aep Logs
+.DS_Store

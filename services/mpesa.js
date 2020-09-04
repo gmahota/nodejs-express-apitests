@@ -13,8 +13,6 @@ const client = new Client({
    debugging: true,        
 });
 
-console.log(process.env.Mpesa_ApiKey);
-
  const set_paymentData = async (from,reference,transaction,amount)=>{
       
     const paymentData = {

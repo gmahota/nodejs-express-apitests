@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Projeto Open Source Para Tests do API Do MPesa",
   "type": "module",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "nodemon .",
     "start": "node ."
@@ -12,7 +12,9 @@
   "license": "MIT",
   "dependencies": {
     "@paymentsds/mpesa": "0.1.0-alpha-7",
+    "algorithmia": "^0.3.10",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "sbd": "^1.0.18"
   }
 }
