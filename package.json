@@ -2,7 +2,6 @@
   "name": "apitests",
   "version": "1.0.0",
   "description": "Projeto Open Source Para Tests do API Do MPesa",
-  "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "nodemon .",
@@ -13,8 +12,12 @@
   "dependencies": {
     "@paymentsds/mpesa": "0.1.0-alpha-7",
     "algorithmia": "^0.3.10",
+    "axios": "^0.20.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "sbd": "^1.0.18"
+    "ibm-watson": "^5.7.0",
+    "sbd": "^1.0.18",
+    "tough-cookie": "^4.0.0",
+    "tunnel": "0.0.6"
   }
 }

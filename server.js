@@ -1,6 +1,6 @@
-import express from 'express'
-import {set_paymentData} from "./services/mpesa.js";
-import {robots} from "./services/robots/index.js"
+const express = require('express' );
+const set_paymentData = require("./services/mpesa.js");
+const robots = require( "./services/robots/index.js");
 
 const app = express()
 const port = 4000
@@ -23,8 +23,9 @@ app.get('/', (req, res) => {
     const content = {};
 
     content.searchTerm = req.params.textsearch;
-    content.lang = "pt"
-    await robots.text(content);
+    content.lang = "pt";
+    console.log(robots);
+    robots.text(content);
 
     res.send(content.sourceContentOriginal);
   });
