@@ -24,3 +24,13 @@ File: `watson-nlu.json`
   "url": "https://gateway.watsonplatform.net/natural-language-understanding/api"
 }
 ```
+
+## Google Cloud Search
+[tutorial](https://www.youtube.com/watch?v=LzPuCVhdUew)
+File: `google-search.json`
+
+```
+{
+  "apiKey": "aaaaaaa"
+}
+```

@@ -7,6 +7,7 @@ const app = express()
 const port = 4000
 
 app.get('/', (req, res) => {
+    
     res.send('Hello World!')
   });
 
@@ -30,6 +31,8 @@ app.get('/', (req, res) => {
     state.save(content);
 
     await robots.text(content);
+    
+    robots.image();
 
     res.send(content.sourceContentOriginal);
   });
