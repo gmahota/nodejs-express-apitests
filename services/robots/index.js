@@ -1,5 +1,3 @@
-
-
 const robots = {
     text: require('./text.js')
 }
