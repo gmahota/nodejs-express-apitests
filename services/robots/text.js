@@ -1,5 +1,32 @@
-import algorithmia from "algorithmia";
-import sentenceBoundaryDetection from "sbd";
+const algorithmia = require("algorithmia");
+
+const sentenceBoundaryDetection = require("sbd");
+
+const watson = require("../../credentials/watson-nlu.json");
+const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
+const { IamAuthenticator } = require("ibm-watson/auth");
+
+const nlu = new NaturalLanguageUnderstandingV1({
+  authenticator: new IamAuthenticator({ apikey: watson.apikey }),
+  version: "2019-02-01",
+  serviceUrl: watson.url,
+});
+
+// nlu
+// .analyze({
+//   text:
+//     "Guimaraes Mahota gosta de futebol e xadrez. Nasceu em maputo e olha ele.", // Buffer or String
+//   features: {
+//     concepts: {},
+//     keywords: {},
+//   },
+// })
+// .then((response) => {
+//   console.log(JSON.stringify(response.result, null, 2));
+// })
+// .catch((err) => {
+//   console.log("error: ", err);
+// });
 
 async function robot(content) {
   console.log(`Recebi com sucesso o content: ${content.searchTerm}`);
@@ -7,6 +34,8 @@ async function robot(content) {
   await fetchContentFromWikipedia(content);
   sanitizeContent(content); //console.log(content.sourceContentOriginal);
   breakContentIntoSentences(content);
+  limitMaximumSentences(content);
+  await fetchKeywordsOfAllSentences(content);
 
   console.log(content);
   //Download Wikipedia Text
@@ -57,7 +86,7 @@ async function robot(content) {
     }
   }
   function removeDatesInParentheses(text) {
-    return text.replace(/\((?:\([^()]*\)|[^()])*\)/gm, '').replace(/  /g,' ');
+    return text.replace(/\((?:\([^()]*\)|[^()])*\)/gm, "").replace(/  /g, " ");
   }
 
   function breakContentIntoSentences(content) {
@@ -75,7 +104,54 @@ async function robot(content) {
     });
   }
 
-  
+  function limitMaximumSentences(content) {
+    content.sentences = content.sentences.slice(0, content.maximumSentences);
+  }
+
+  async function fetchKeywordsOfAllSentences(content) {
+    try {
+      console.log("> [text-robot] Starting to fetch keywords from Watson");
+
+      for (const sentence of content.sentences) {
+        console.log(`> [text-robot] Sentence: "${sentence.text}"`);
+
+        sentence.keywords = await fetchWatsonAndReturnKeywords(sentence.text);
+
+        console.log(
+          `> [text-robot] Keywords: ${sentence.keywords.join(", ")}\n`
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function fetchWatsonAndReturnKeywords(sentence) {
+    try {
+      return new Promise((resolve, reject) => {
+        nlu
+          .analyze({
+            text: sentence, // Buffer or String
+            features: {
+              concepts: {},
+              keywords: {},
+            },
+          })
+          .then((response) => {
+            const keywords = response.result.keywords.map((keyword) => {
+              return keyword.text;
+            });
+
+            resolve(keywords);
+          })
+          .catch((err) => {
+            console.log("error: ", err);
+          });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
-export { robot };
+module.exports = robot;
