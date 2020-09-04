@@ -1,6 +1,7 @@
 const express = require('express' );
 const set_paymentData = require("./services/mpesa.js");
 const robots = require( "./services/robots/index.js");
+const state = require('./services/robots/state.js')
 
 const app = express()
 const port = 4000
@@ -20,12 +21,15 @@ app.get('/', (req, res) => {
   });
 
   app.get('/robot/:textsearch', async (req, res) => {
-    const content = {};
+    const content = {
+      searchTerm : req.params.textsearch,
+      lang : "pt",
+      maximumSentences: 7
+    };
 
-    content.searchTerm = req.params.textsearch;
-    content.lang = "pt";
-    console.log(robots);
-    robots.text(content);
+    state.save(content);
+
+    await robots.text(content);
 
     res.send(content.sourceContentOriginal);
   });

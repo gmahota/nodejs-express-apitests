@@ -6,38 +6,24 @@ const watson = require("../../credentials/watson-nlu.json");
 const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
 const { IamAuthenticator } = require("ibm-watson/auth");
 
+const state = require('./state.js')
+
 const nlu = new NaturalLanguageUnderstandingV1({
   authenticator: new IamAuthenticator({ apikey: watson.apikey }),
   version: "2019-02-01",
   serviceUrl: watson.url,
 });
 
-// nlu
-// .analyze({
-//   text:
-//     "Guimaraes Mahota gosta de futebol e xadrez. Nasceu em maputo e olha ele.", // Buffer or String
-//   features: {
-//     concepts: {},
-//     keywords: {},
-//   },
-// })
-// .then((response) => {
-//   console.log(JSON.stringify(response.result, null, 2));
-// })
-// .catch((err) => {
-//   console.log("error: ", err);
-// });
-
 async function robot(content) {
-  console.log(`Recebi com sucesso o content: ${content.searchTerm}`);
-
+  console.log(`Recebi com sucesso o content: ${content.searchTerm}`);  
+  state.save(content);
   await fetchContentFromWikipedia(content);
   sanitizeContent(content); //console.log(content.sourceContentOriginal);
   breakContentIntoSentences(content);
   limitMaximumSentences(content);
   await fetchKeywordsOfAllSentences(content);
 
-  console.log(content);
+  state.save(content);
   //Download Wikipedia Text
   async function fetchContentFromWikipedia(content) {
     console.log("> [text-robot] Fetching content from Wikipedia");
