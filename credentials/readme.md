@@ -31,6 +31,6 @@ File: `google-search.json`
 
 ```
 {
-  "apiKey": "aaaaaaa"
+  "apiKey": "aaaaaaaa"
 }
 ```
