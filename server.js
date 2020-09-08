@@ -26,7 +26,7 @@ app.get(
 app.get("/robot/:textsearch", async (req, res) => {
   const content = {
     searchTerm: req.params.textsearch,
-    lang: "pt",
+    lang: "en",
     maximumSentences: 7,
   };
 
