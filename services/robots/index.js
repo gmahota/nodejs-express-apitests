@@ -1,9 +1,7 @@
-import { robot as textRobot}   from './text.js';
-
 const robots = {
-    text: textRobot
+    text: require('./text.js'),
+    image: require('./image.js'),
+    video: require('./video.js')
 }
 
-export {
-    robots
-}
+module.exports = robots
