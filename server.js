@@ -7,7 +7,7 @@ const app = express();
 const port = 4000;
 
 app.get("/", async (req, res) => {
-  await robots.video();
+  
   res.send("Hello World!");
 });
 
@@ -35,6 +35,8 @@ app.get("/robot/:textsearch", async (req, res) => {
   await robots.text(content);
 
   await robots.image();
+
+  await robots.video();
 
   res.send(content.sourceContentOriginal);
 });
