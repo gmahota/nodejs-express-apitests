@@ -87,6 +87,10 @@ content/*.png
 content/*.jpg
 content/*.js
 content/*.mov
-Adobe After Effects Auto-Save
+
+#Adobe After Effects Auto-Save
+after-effects-script.js
 template.aep Logs
+Adobe After Effects Auto-Save
+
 .DS_Store
