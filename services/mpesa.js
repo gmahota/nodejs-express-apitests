@@ -1,6 +1,6 @@
-const { Client } =require('@paymentsds/mpesa') ;
+import { Client } from '@paymentsds/mpesa'
 
-const dotenv =require( 'dotenv');
+import dotenv from 'dotenv'
 
 dotenv.config();
 
@@ -31,5 +31,6 @@ const client = new Client({
      });
  };
 
-
- module.exports = set_paymentData;
+ export{
+   set_paymentData
+ }

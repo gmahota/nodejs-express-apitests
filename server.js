@@ -1,13 +1,11 @@
-const express = require('express' );
-const set_paymentData = require("./services/mpesa.js");
-const robots = require( "./services/robots/index.js");
-const state = require('./services/robots/state.js')
+import express from 'express'
+import {set_paymentData} from "./services/mpesa.js";
+import {robots} from "./services/robots/index.js"
 
 const app = express()
 const port = 4000
 
 app.get('/', (req, res) => {
-  robots.image();
     res.send('Hello World!')
   });
 
@@ -22,17 +20,11 @@ app.get('/', (req, res) => {
   });
 
   app.get('/robot/:textsearch', async (req, res) => {
-    const content = {
-      searchTerm : req.params.textsearch,
-      lang : "pt",
-      maximumSentences: 7
-    };
+    const content = {};
 
-    state.save(content);
-
+    content.searchTerm = req.params.textsearch;
+    content.lang = "pt"
     await robots.text(content);
-    
-    robots.image();
 
     res.send(content.sourceContentOriginal);
   });
