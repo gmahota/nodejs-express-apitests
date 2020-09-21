@@ -23,6 +23,19 @@ app.get(
   }
 );
 
+app.get("/site/:textsearch", async (req, res) => {
+
+  const content = {
+    searchTerm: req.params.textsearch,
+    lang: "pt",
+    category: "celebridades",
+  };
+
+  await robots.sitereader.read(content);
+
+  res.send(content.website);
+});
+
 app.get("/robot/:textsearch", async (req, res) => {
   const content = {
     searchTerm: req.params.textsearch,
