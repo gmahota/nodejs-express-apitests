@@ -2,4 +2,6 @@
 
 1. Instalar o SDK
 
+`
 npm i @paymentsds/mpesa
+`
