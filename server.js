@@ -12,7 +12,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get(
-  "/mpesa/payment/:number-:reference-:transaction-:amount",
+  "/api/mpesa/payment/:number-:reference-:transaction-:amount",
   async (req, res) => {
     var number = req.params.number;
     var reference = req.params.reference;
@@ -23,7 +23,7 @@ app.get(
   }
 );
 
-app.get("/site/:textsearch", async (req, res) => {
+app.get("/api/site/:textsearch", async (req, res) => {
 
   const content = {
     searchTerm: req.params.textsearch,
@@ -36,7 +36,7 @@ app.get("/site/:textsearch", async (req, res) => {
   res.send(content.website);
 });
 
-app.get("/robot/:textsearch", async (req, res) => {
+app.get("/api/robot/:textsearch", async (req, res) => {
   const content = {
     searchTerm: req.params.textsearch,
     lang: "en",
