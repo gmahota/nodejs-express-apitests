@@ -3,7 +3,7 @@ const google = require("googleapis").google;
 const customSearch = google.customsearch("v1");
 const state = require("./state.js");
 
-const googleSearchCredentials = require("../../credentials/google-search.json");
+//const googleSearchCredentials = require("../../credentials/google-search.json");
 
 async function robot() {
   console.log('> [image-robot] Starting...')
@@ -34,8 +34,8 @@ async function robot() {
 
   async function fetchGoogleAndReturnImagesLinks(query) {
     const response = await customSearch.cse.list({
-      auth: googleSearchCredentials.apiKey,
-      cx: googleSearchCredentials.searchEngineId,
+      auth: process.env.Google_Search_Credentials_ApiKey,
+      cx: process.env.Google_Search_Credentials_SearchEngineId,
       q: query,
       searchType: 'image',
       num: 2
@@ -81,8 +81,6 @@ async function robot() {
       dest: `./content/${fileName}`
     })
   }
-  
-  
 }
 
 module.exports = robot;

@@ -2,16 +2,16 @@ const algorithmia = require("algorithmia");
 
 const sentenceBoundaryDetection = require("sbd");
 
-const watson = require("../../credentials/watson-nlu.json");
+//const watson = require("../../credentials/watson-nlu.json");
 const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
 const { IamAuthenticator } = require("ibm-watson/auth");
 
 const state = require('./state.js')
 
 const nlu = new NaturalLanguageUnderstandingV1({
-  authenticator: new IamAuthenticator({ apikey: watson.apikey }),
+  authenticator: new IamAuthenticator({ apikey: process.env.watson_apikey }),
   version: "2019-02-01",
-  serviceUrl: watson.url,
+  serviceUrl: process.env.watson_url_natural_language,
 });
 
 async function robot(content) {
