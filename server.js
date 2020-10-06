@@ -4,7 +4,7 @@ const robots = require("./services/robots/index.js");
 const state = require("./services/robots/state.js");
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 app.get("/", async (req, res) => {
   
