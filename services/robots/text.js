@@ -17,10 +17,10 @@ const nlu = new NaturalLanguageUnderstandingV1({
 async function robot(content) {
   console.log(`Recebi com sucesso o content: ${content.searchTerm}`);  
   state.save(content);
-  await fetchContentFromWikipedia(content);
-  sanitizeContent(content); //console.log(content.sourceContentOriginal);
-  breakContentIntoSentences(content);
-  limitMaximumSentences(content);
+  //await fetchContentFromWikipedia(content);
+  //sanitizeContent(content); //console.log(content.sourceContentOriginal);
+  //breakContentIntoSentences(content);
+  //limitMaximumSentences(content);
   await fetchKeywordsOfAllSentences(content);
 
   state.save(content);

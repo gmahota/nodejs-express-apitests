@@ -9,7 +9,7 @@ async function robot() {
   console.log('> [image-robot] Starting...')
   const content = state.load();
 
-  await fetchImagesOfAllSentences(content);
+  //await fetchImagesOfAllSentences(content);
 
   await downloadAllImages(content);
   
@@ -58,7 +58,7 @@ async function robot() {
 
       for (let imageIndex = 0; imageIndex < images.length; imageIndex++) {
         const imageUrl = images[imageIndex]
-
+        
         try {
           if (content.downloadedImages.includes(imageUrl)) {
             throw new Error('Image already downloaded')

@@ -4,10 +4,9 @@ const robots = require("./services/robots/index.js");
 const state = require("./services/robots/state.js");
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 app.get("/", async (req, res) => {
-  
   res.send("Hello World!");
 });
 
@@ -24,7 +23,6 @@ app.get(
 );
 
 app.get("/site/:textsearch", async (req, res) => {
-
   const content = {
     searchTerm: req.params.textsearch,
     lang: "pt",
@@ -36,22 +34,68 @@ app.get("/site/:textsearch", async (req, res) => {
   res.send(content.website);
 });
 
-app.get("/robot/:textsearch", async (req, res) => {
-  const content = {
-    searchTerm: req.params.textsearch,
-    lang: "en",
-    maximumSentences: 7,
-  };
+app.get("/robot/text/:textsearch", async (req, res) => {
+  // const content = {
+  //   searchTerm: req.params.textsearch,
+  //   lang: "pt",
+  //   maximumSentences: 7,
+  // };
 
-  state.save(content);
+  //state.save(content);
+
+  const content = state.load();
 
   await robots.text(content);
 
+  //await robots.image();
+
+  //await robots.video();
+
+  res.send(content.sourceContentOriginal);
+});
+
+app.get("/robot/image/", async (req, res) => {
+  // const content = {
+  //   searchTerm: req.params.textsearch,
+  //   lang: "pt",
+  //   maximumSentences: 7,
+  // };
+
+  //state.save(content);
+
+  //const content = state.load();
+
+  //await robots.text(content);
+
   await robots.image();
+
+  //await robots.video();
+
+  const content = state.load();
+
+  res.send(content.sentences);
+});
+
+app.get("/robot/video/", async (req, res) => {
+  // const content = {
+  //   searchTerm: req.params.textsearch,
+  //   lang: "pt",
+  //   maximumSentences: 7,
+  // };
+
+  //state.save(content);
+
+  //const content = state.load();
+
+  //await robots.text(content);
+
+  //await robots.image();
 
   await robots.video();
 
-  res.send(content.sourceContentOriginal);
+  const content = state.load();
+
+  res.send(content.sentences);
 });
 
 app.listen(port, () => {
