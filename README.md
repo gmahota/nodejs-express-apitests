@@ -1,4 +1,16 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gmahota/ApiTests) 
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gmahota/ApiTests) [![Heroku](https://heroku-badge.herokuapp.com/?app=mozaapi)](https://mozaapi.herokuapp.com)
+
+## Development Task List
+
+- Deploy to Heroku :heavy_check_mark:
+- [ ] GraphQL Server 
+- [ ] Dockerization 
+- [ ] Contact 
+- [ ] Authentication 
+- [ ] Documentation 
+- [ ] Development Tutorial 
+- [ ] Deployment Tutorial 
+
 
 # ApiTests
 
