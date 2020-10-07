@@ -23,8 +23,5 @@
     "sbd": "^1.0.18",
     "tough-cookie": "^4.0.0",
     "tunnel": "0.0.6"
-  },
-  "devDependencies": {
-    "playwright": "^1.4.2"
   }
 }

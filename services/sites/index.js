@@ -1,4 +1,8 @@
-const playwright = require('playwright');
+
+const cheerio = require("cheerio");
+const axios = require("axios");
+const FormData = require("form-data");
+
 // search.spec.js
 const { SearchPage } = require('../../models/Search')
 
@@ -8,6 +12,7 @@ const fetchData = async (siteUrl) => {
 };
 
 async function read(content) {
+  return
   // In the test
   const page = await browser.newPage();
   const searchPage = new SearchPage(page);

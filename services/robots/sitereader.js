@@ -1,7 +1,6 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
 const FormData = require("form-data");
-const readSiteGov = require("../sites/governo/portalgovernomz/index.js");
 
 const sites = {
   governo: require("../sites/governo/portalgovernomz/index.js"),
