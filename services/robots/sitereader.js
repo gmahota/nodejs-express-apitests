@@ -5,6 +5,7 @@ const FormData = require("form-data");
 const sites = {
   governo: require("../sites/governo/portalgovernomz/index.js"),
   noticias: require("../sites/jornal/noticiasmz/index.js"),
+  opais: require("../sites/jornal/opais/index.js"),
   default: require("../sites/index.js"),
 };
 
@@ -20,6 +21,7 @@ async function read(content) {
       break;
     case "noticias":
       await sites.noticias.readSite(content);
+      await sites.opais.readSite(content);
       break;
     default:
       sites.default;

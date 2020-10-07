@@ -14,27 +14,37 @@ async function readSite(content) {
   await getCategorySite(content);
 
   async function getSiteHome(content){
-    portal = {
+    const portal = {
       path: "/",
-      url:"https://www.jornalnoticias.co.mz"
+      url:"http://opais.sapo.mz/"
     };
   
     const $ = await fetchData(portal.url + portal.path );
-    
+  
+    //if(content.website.posts)
     portal.posts=[];
   
-    $(".module.clearfix").each((index, element) => {
-      getFeatures($,portal,$(element));
-    });
+    const features = $("#parallax-3").find(".entry-item");
+    const outherLinks = $("#parallax-4");
+
+    $(features).each((index, element) => {    
+        getFeaturePost($,portal,element);
+    });   
+    
+    $(outherLinks).each((index, element) => {    
+      //getFeaturePost($,portal,element);
+      //getOuterPosts($,content,outherLinks,category)
+    }); 
+    
   
-    portal.title = "Jornal Noticias";
+    portal.title = "O Pais";
   
     portal.subtitle = "Pagina Inicial";
 
     content.portal.push(portal);
   }
 
-  async function getCategorySite(content){
+  async function getCategorySite(portal){
     if(!content.category)
       return;
 
@@ -60,27 +70,22 @@ async function getSinglePost(portal,post){
 
 function getFeatures($,portal,page) {
 
-  let category = removeBlankLinesAndMarkdown(page.find("h3").text());
-  
+    
   const post = page.find(".item-wrap");
   const outherLinks = page.find(".other-links");
-  
-  getFeaturePost(portal,post,category);
 
   getOuterPosts($,portal,outherLinks,category)
 }
 
-function getFeaturePost(portal,feature,category){
+function getFeaturePost($,portal,feature){
   
-  feature.find(".icon-calendar").remove();
-
   const post = {
-    category:category,
-    url:feature.find("a").attr("href"),
-    resume:removeBlankLinesAndMarkdown(feature.find("a").text()).replace('Leia +',''),
-    desc:removeBlankLinesAndMarkdown(feature.find(".item-desc").text()),
-    date:removeBlankLinesAndMarkdown(feature.find(".item-date").text()),
-    image:feature.find("img").attr('src'),
+    category:$(feature).find(".categories-4").text().toLowerCase(),
+    url:$(feature).find(".categories-4").attr("href"),
+    resume:removeBlankLinesAndMarkdown($(feature).find("h6").text()),
+    desc:removeBlankLinesAndMarkdown($(feature).find("h6").text()),
+    date:removeBlankLinesAndMarkdown($(feature).find(".entry-time").text()),
+    image:$(feature).find("img").attr('src'),
     featured:true
   }
 
@@ -89,7 +94,7 @@ function getFeaturePost(portal,feature,category){
   }  
 }
 
-function getOuterPosts($,portal,outherLinks,category){
+function getOuterPosts($,content,outherLinks,category){
   outherLinks.find(".icon-calendar").remove();
 
   outherLinks.find('li').each((index, element) => {
@@ -104,7 +109,7 @@ function getOuterPosts($,portal,outherLinks,category){
     }
 
     if(post.desc.length>0){
-      portal.posts.push(post);
+      content.website.posts.push(post);
     }  
   })
 

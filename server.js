@@ -27,12 +27,13 @@ app.get("/api/site/:type", async (req, res) => {
 
   const content = {
     searchTerm: req.params.type,
-    lang: "pt"
+    lang: "pt",
+    portal :[]
   };
 
   await robots.sitereader.read(content);
 
-  res.send(content.website);
+  res.send(content);
 });
 
 app.get("/api/site/:type/:category", async (req, res) => {
@@ -41,6 +42,7 @@ app.get("/api/site/:type/:category", async (req, res) => {
     searchTerm: req.params.type,
     lang: "pt",
     category: req.params.category,
+    portal :[]
   };
 
   await robots.sitereader.read(content);
