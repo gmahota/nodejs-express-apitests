@@ -12,6 +12,7 @@ async function readSite(content) {
   content.website = {
     path: "/por/Governo/Conselho-de-Ministros",
     url:"https://www.portaldogoverno.gov.mz"
+    
   };
 
   const $ = await fetchData(content.website.url + content.website.path );
