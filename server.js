@@ -23,12 +23,24 @@ app.get(
   }
 );
 
-app.get("/api/site/:textsearch", async (req, res) => {
+app.get("/api/site/:type", async (req, res) => {
 
   const content = {
-    searchTerm: req.params.textsearch,
+    searchTerm: req.params.type,
+    lang: "pt"
+  };
+
+  await robots.sitereader.read(content);
+
+  res.send(content.website);
+});
+
+app.get("/api/site/:type/:category", async (req, res) => {
+
+  const content = {
+    searchTerm: req.params.type,
     lang: "pt",
-    category: "celebridades",
+    category: req.params.category,
   };
 
   await robots.sitereader.read(content);

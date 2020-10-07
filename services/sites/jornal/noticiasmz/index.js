@@ -9,48 +9,73 @@ const fetchData = async (siteUrl) => {
 
 async function readSite(content) {
   
-  content.website = {
-    path: "/",
-    url:"https://www.jornalnoticias.co.mz"
-  };
+  await getSiteHome(content);
 
-  const $ = await fetchData(content.website.url + content.website.path );
+  await getCategorySite(content);
 
-  content.website.posts=[];
+  async function getSiteHome(content){
+    content.website = {
+      path: "/",
+      url:"https://www.jornalnoticias.co.mz"
+    };
+  
+    const $ = await fetchData(content.website.url + content.website.path );
+  
+    content.website.posts=[];
+  
+    $(".module.clearfix").each((index, element) => {
+      getFeatures($,content,$(element));
+    });
+  
+    content.website.title = "Jornal Noticias";
+  
+    content.website.subtitle = "Pagina Inicial";
+  }
 
-  $(".module.clearfix").each((index, element) => {
-    getFeatures($,content,$(element));
-  });
+  async function getCategorySite(content){
+    if(!content.category)
+      return;
 
-  content.website.title = "Jornal Noticias";
+    content.website.posts = content.website.posts
+      .filter(post => post.category.toLowerCase() === content.category.toLowerCase());
+     
+      for(let i  = 0 ; i < content.website.posts.length ; i++){
+        content.website.posts[i] = await getSinglePost(content,content.website.posts[i]);
+      } 
+  }  
+}
 
-  content.website.subtitle = "Pagina Inicial";
+async function getSinglePost(content,post){
+
+  const $ = await fetchData(content.website.url + post.url );
+
+  post.author = $(".topbanner").find("font").text();
+  post.title = $(".page-header").find("headline").text();
+  post.text = $(".component-inner2").find("p").text();
+  
+  return post;
 }
 
 function getFeatures($,content,page) {
-  const posts = [];
-  let keyword = removeBlankLinesAndMarkdown(page.find("h3").text());
+
+  let category = removeBlankLinesAndMarkdown(page.find("h3").text());
   
   const post = page.find(".item-wrap");
   const outherLinks = page.find(".other-links");
   
-  getFeaturePost(posts,post,keyword);
+  getFeaturePost(content,post,category);
 
-  getOuterPosts($,posts,outherLinks,keyword)
-
-  if(keyword.length > 0){
-    content.website.posts.push(posts)
-  }
+  getOuterPosts($,content,outherLinks,category)
 }
 
-function getFeaturePost(posts,feature,keyword){
+function getFeaturePost(content,feature,category){
   
   feature.find(".icon-calendar").remove();
 
   const post = {
-    keyword:keyword,
+    category:category,
     url:feature.find("a").attr("href"),
-    title:removeBlankLinesAndMarkdown(feature.find("a").text()).replace('Leia +',''),
+    resume:removeBlankLinesAndMarkdown(feature.find("a").text()).replace('Leia +',''),
     desc:removeBlankLinesAndMarkdown(feature.find(".item-desc").text()),
     date:removeBlankLinesAndMarkdown(feature.find(".item-date").text()),
     image:feature.find("img").attr('src'),
@@ -58,18 +83,18 @@ function getFeaturePost(posts,feature,keyword){
   }
 
   if(post.desc.length>0){
-    posts.push(post);
+    content.website.posts.push(post);
   }  
 }
 
-function getOuterPosts($,posts,outherLinks,keyword){
+function getOuterPosts($,content,outherLinks,category){
   outherLinks.find(".icon-calendar").remove();
 
   outherLinks.find('li').each((index, element) => {
     const post = {
-      keyword:keyword,
+      category:category,
       url:$(element).find("a").attr("href"),
-      title:removeBlankLinesAndMarkdown($(element).find(".item-title").text()).replace('Leia +',''),
+      resume:removeBlankLinesAndMarkdown($(element).find(".item-title").text()).replace('Leia +',''),
       desc:removeBlankLinesAndMarkdown($(element).find(".item-title").text()).replace('Leia +',''),
       date:removeBlankLinesAndMarkdown($(element).find(".item-date").text()),
       image:$(element).find("img").attr('src'),
@@ -77,7 +102,7 @@ function getOuterPosts($,posts,outherLinks,keyword){
     }
 
     if(post.desc.length>0){
-      posts.push(post);
+      content.website.posts.push(post);
     }  
   })
 
