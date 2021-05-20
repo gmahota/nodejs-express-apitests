@@ -1,4 +1,4 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gmahota/ApiTests) [![Heroku](https://heroku-badge.herokuapp.com/?app=mozaapi)](https://mozaapi.herokuapp.com)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gmahota/nodejs-express-apitests) [![Heroku](https://heroku-badge.herokuapp.com/?app=mahotaapitestes)](https://mahotaapitestes.herokuapp.com)
 
 ## Development Task List
 
